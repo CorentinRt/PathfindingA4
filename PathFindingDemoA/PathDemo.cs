@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
+using PathFindingDemoA;
 
 public class Node
 {
@@ -71,6 +72,87 @@ public class PathDemo
     public void Run()
     {
         Initialize();
-    }
 
+        List<Node> path = FindPathGlouton("A", "G");
+
+        string pathString = "Path is : ";
+        foreach (Node node in path)
+        {
+            pathString += $"-> {node.name} ";
+        }
+        
+        Console.WriteLine(pathString);
+    }
+    
+    public List<Node> FindPathGlouton(string start, string goal)
+    {
+        List<Node> path = new List<Node>();
+
+        HashSet<Node> hashSet = new HashSet<Node>();
+        
+        Node startNode = nodes[start];
+        
+        Node goalNode = nodes[goal];
+        
+        path.Add(startNode);
+        hashSet.Add(startNode);
+        
+        Node currentNode = startNode;
+        
+        while (currentNode != goalNode && currentNode != null)
+        {
+            int lowestCost = -1;
+            Node lowestNode = null;
+            
+            foreach (KeyValuePair<Node, int> adjacent in currentNode.adjacents)
+            {
+                if (adjacent.Key == null || hashSet.Contains(adjacent.Key))
+                    continue;
+                
+                if (lowestCost == -1)
+                {
+                    lowestCost = adjacent.Value;
+                    lowestNode = adjacent.Key;
+                    continue;
+                }
+
+                /*
+                 Ici je check si l'adjacent est le goal. Cela peut-être viable en fonction du contexte.
+                 Si je veux un chemin très rapidement mais pas forcement viable alors pas besoin.
+                 Si je veux agrandir mes chances de trouver un chemin viable mais pas forcement alors pourquoi pas.
+                if (adjacent.Key == goalNode)
+                {
+                    lowestCost = adjacent.Value;
+                    lowestNode = adjacent.Key;
+                    break;
+                }
+                */
+                
+                if (adjacent.Value < lowestCost)
+                {
+                    lowestCost = adjacent.Value;
+                    lowestNode = adjacent.Key;
+                }
+            }
+
+            if (lowestNode == null)
+                break;
+            
+            currentNode = lowestNode;
+            
+            path.Add(currentNode);
+            hashSet.Add(currentNode);
+        }
+
+        return path;
+    }
+    
+    public List<Node> FindPathBreadthFirstSearch(string start, string goal)
+    {
+        List<Node> result = new List<Node>();
+
+        
+
+        return result;
+    }
 }

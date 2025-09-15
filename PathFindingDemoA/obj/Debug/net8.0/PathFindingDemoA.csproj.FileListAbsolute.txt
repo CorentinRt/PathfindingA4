@@ -12,3 +12,4 @@ C:\Users\coren\Documents\IIM\A4\Pathfinding\PathfindingA4\PathFindingDemoA\obj\D
 C:\Users\coren\Documents\IIM\A4\Pathfinding\PathfindingA4\PathFindingDemoA\obj\Debug\net8.0\PathFindingDemoA.pdb
 C:\Users\coren\Documents\IIM\A4\Pathfinding\PathfindingA4\PathFindingDemoA\obj\Debug\net8.0\PathFindingDemoA.genruntimeconfig.cache
 C:\Users\coren\Documents\IIM\A4\Pathfinding\PathfindingA4\PathFindingDemoA\obj\Debug\net8.0\ref\PathFindingDemoA.dll
+C:\Users\coren\Documents\IIM\A4\Pathfinding\PathfindingA4\PathFindingDemoA\obj\Debug\net8.0\PathFindingDemoA.sourcelink.json
