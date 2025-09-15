@@ -157,16 +157,13 @@ public class PathDemo
     // BFS pathfinding
     public List<Node> FindPathBreadthFirstSearch(string start, string goal)
     {
-        List<Node> path = new List<Node>();
-
         Queue<Node> toExplore = new Queue<Node>();
         
         HashSet<Node> visited = new HashSet<Node>();
-
-        Dictionary<Node, Node> parentDictionary =  new Dictionary<Node, Node>();
+        
+        Dictionary<Node, Node> childToParentDictionary =  new Dictionary<Node, Node>();
         
         Node startNode = nodes[start];
-        
         Node goalNode = nodes[goal];
         
         toExplore.Enqueue(startNode);
@@ -174,44 +171,52 @@ public class PathDemo
         
         while (toExplore.Count > 0)
         {
+            // Process next toExplore node
             Node currentNode = toExplore.Dequeue();
 
             if (currentNode == goalNode)
                 break;
 
+            // Add every adjacent in to explore and visited to be checked later
             foreach (KeyValuePair<Node, int> adjacent in currentNode.adjacents)
             {
                 if (visited.Contains(adjacent.Key))
                     continue;
 
                 Console.WriteLine($"Add to visited and to explore {adjacent.Key.name}");
-                visited.Add(adjacent.Key);
                 
+                visited.Add(adjacent.Key);
                 toExplore.Enqueue(adjacent.Key);
 
                 Console.WriteLine($"Set parent of {adjacent.Key.name} to {currentNode.name}");
-                parentDictionary[adjacent.Key] = currentNode;
+                
+                // Create child->parent path entry in dict
+                childToParentDictionary[adjacent.Key] = currentNode;
             }
         }
         
+        // Re-build path (but in reverse)
         Console.WriteLine("-----------------------------");
 
-        if (!parentDictionary.ContainsKey(goalNode))
+        List<Node> path = new List<Node>();
+        
+        if (!childToParentDictionary.ContainsKey(goalNode))
             return path;
         
         Node currentParent = goalNode;
-
         path.Add(goalNode);
+        
         Console.WriteLine(goalNode.name);
-
         
         while (currentParent != startNode)
         {
-            Console.WriteLine(parentDictionary[currentParent].name);
-            path.Add(parentDictionary[currentParent]);
-            currentParent = parentDictionary[currentParent];
+            Console.WriteLine(childToParentDictionary[currentParent].name);
+            
+            path.Add(childToParentDictionary[currentParent]);
+            currentParent = childToParentDictionary[currentParent];
         }
 
+        // Path need to be reversed to get start first
         path.Reverse();
 
         Console.WriteLine("-----------------------------");
