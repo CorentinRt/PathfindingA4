@@ -95,14 +95,14 @@ public class PathDemo
         
         List<Node> path = new List<Node>();
 
-        HashSet<Node> hashSet = new HashSet<Node>();
+        HashSet<Node> visited = new HashSet<Node>();
         
         Node startNode = nodes[start];
         
         Node goalNode = nodes[goal];
         
         path.Add(startNode);
-        hashSet.Add(startNode);
+        visited.Add(startNode);
         
         Node currentNode = startNode;
         
@@ -113,16 +113,9 @@ public class PathDemo
             
             foreach (KeyValuePair<Node, int> adjacent in currentNode.adjacents)
             {
-                if (adjacent.Key == null || hashSet.Contains(adjacent.Key))
+                if (visited.Contains(adjacent.Key))
                     continue;
                 
-                if (lowestCost == -1)
-                {
-                    lowestCost = adjacent.Value;
-                    lowestNode = adjacent.Key;
-                    continue;
-                }
-
                 /*
                  Ici je check si l'adjacent est le goal. Cela peut-être viable en fonction du contexte.
                  Si je veux un chemin très rapidement mais pas forcement viable alors pas besoin.
@@ -135,20 +128,25 @@ public class PathDemo
                 }
                 */
                 
-                if (adjacent.Value < lowestCost)
+                if (adjacent.Value < lowestCost || lowestCost == -1)
                 {
                     lowestCost = adjacent.Value;
                     lowestNode = adjacent.Key;
                 }
             }
 
+            // Revenir en arriere si impossible
             if (lowestNode == null)
-                break;
+            {
+                currentNode = path[^2];
+                path.RemoveAt(path.Count - 1);
+                continue;
+            }
             
             currentNode = lowestNode;
             
             path.Add(currentNode);
-            hashSet.Add(currentNode);
+            visited.Add(currentNode);
         }
 
         return path;
