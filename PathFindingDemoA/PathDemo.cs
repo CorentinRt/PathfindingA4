@@ -195,8 +195,11 @@ public class PathDemo
         }
         
         Console.WriteLine("-----------------------------");
+
+        if (!parentDictionary.ContainsKey(goalNode))
+            return path;
         
-        Node currentParent = parentDictionary[goalNode];
+        Node currentParent = goalNode;
 
         path.Add(goalNode);
         Console.WriteLine(goalNode.name);
