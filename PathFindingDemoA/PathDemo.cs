@@ -74,7 +74,8 @@ public class PathDemo
     {
         Initialize();
 
-        List<Node> path = FindPathGlouton("A", "G");
+        //List<Node> path = FindPathGlouton("A", "G");
+        List<Node> path = FindPathBreadthFirstSearch("A", "G");
 
         string pathString = "Path is : ";
         foreach (Node node in path)
@@ -85,6 +86,7 @@ public class PathDemo
         Console.WriteLine(pathString);
     }
     
+    // Glouton pathfinding
     public List<Node> FindPathGlouton(string start, string goal)
     {
         if (!nodes.ContainsKey(start))
@@ -152,12 +154,65 @@ public class PathDemo
         return path;
     }
     
+    // BFS pathfinding
     public List<Node> FindPathBreadthFirstSearch(string start, string goal)
     {
-        List<Node> result = new List<Node>();
+        List<Node> path = new List<Node>();
+
+        Queue<Node> toExplore = new Queue<Node>();
+        
+        HashSet<Node> visited = new HashSet<Node>();
+
+        Dictionary<Node, Node> parentDictionary =  new Dictionary<Node, Node>();
+        
+        Node startNode = nodes[start];
+        
+        Node goalNode = nodes[goal];
+        
+        toExplore.Enqueue(startNode);
+        visited.Add(startNode);
+        
+        while (toExplore.Count > 0)
+        {
+            Node currentNode = toExplore.Dequeue();
+
+            if (currentNode == goalNode)
+                break;
+
+            foreach (KeyValuePair<Node, int> adjacent in currentNode.adjacents)
+            {
+                if (visited.Contains(adjacent.Key))
+                    continue;
+
+                Console.WriteLine($"Add to visited and to explore {adjacent.Key.name}");
+                visited.Add(adjacent.Key);
+                
+                toExplore.Enqueue(adjacent.Key);
+
+                Console.WriteLine($"Set parent of {adjacent.Key.name} to {currentNode.name}");
+                parentDictionary[adjacent.Key] = currentNode;
+            }
+        }
+        
+        Console.WriteLine("-----------------------------");
+        
+        Node currentParent = parentDictionary[goalNode];
+
+        path.Add(goalNode);
+        Console.WriteLine(goalNode.name);
 
         
+        while (currentParent != startNode)
+        {
+            Console.WriteLine(parentDictionary[currentParent].name);
+            path.Add(parentDictionary[currentParent]);
+            currentParent = parentDictionary[currentParent];
+        }
 
-        return result;
+        path.Reverse();
+
+        Console.WriteLine("-----------------------------");
+        
+        return path;
     }
 }
