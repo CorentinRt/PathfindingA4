@@ -87,6 +87,12 @@ public class PathDemo
     
     public List<Node> FindPathGlouton(string start, string goal)
     {
+        if (!nodes.ContainsKey(start))
+            throw new Exception("Missing node");
+        
+        if (!nodes.ContainsKey(goal))
+            throw new Exception("Missing node");
+        
         List<Node> path = new List<Node>();
 
         HashSet<Node> hashSet = new HashSet<Node>();
