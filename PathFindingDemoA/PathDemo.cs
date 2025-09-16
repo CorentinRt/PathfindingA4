@@ -1,4 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
+// Corentin REMOT
+
 using System.Diagnostics;
 
 namespace PathfindingDemoA;
@@ -77,6 +80,11 @@ public class PathDemo
         //List<Node> path = FindPathGlouton("A", "G");
         List<Node> path = FindPathBreadthFirstSearch("A", "G");
 
+        PrintPath(path);
+    }
+
+    private void PrintPath(List<Node> path)
+    {
         string pathString = "Path is : ";
         foreach (Node node in path)
         {
@@ -86,6 +94,7 @@ public class PathDemo
         Console.WriteLine(pathString);
     }
     
+    // ---------------------------------------
     // Glouton pathfinding
     public List<Node> FindPathGlouton(string start, string goal)
     {
@@ -154,6 +163,7 @@ public class PathDemo
         return path;
     }
     
+    // ---------------------------------------
     // BFS pathfinding
     public List<Node> FindPathBreadthFirstSearch(string start, string goal)
     {
@@ -169,14 +179,26 @@ public class PathDemo
         toExplore.Enqueue(startNode);
         visited.Add(startNode);
         
+        Console.WriteLine("----------------------------");
+        Console.WriteLine("Start algo BFS");
+        
         while (toExplore.Count > 0)
         {
             // Process next toExplore node
             Node currentNode = toExplore.Dequeue();
+            Console.WriteLine("----------------------------");
+            
+            Console.WriteLine("Current node: " + currentNode.name);
 
             if (currentNode == goalNode)
+            {
+                Console.WriteLine("Find goal node !");
                 break;
+            }
 
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("Start processing adjacents");
+            
             // Add every adjacent in to explore and visited to be checked later
             foreach (KeyValuePair<Node, int> adjacent in currentNode.adjacents)
             {
@@ -193,11 +215,30 @@ public class PathDemo
                 // Create child->parent path entry in dict
                 childToParentDictionary[adjacent.Key] = currentNode;
             }
+            Console.WriteLine("End processing adjacents");
+
+            string visitedText = "Visited : ";
+            string toExploreText = "To explore : ";
+
+            foreach (Node node in visited)
+            {
+                visitedText += node.name + " ";
+            }
+            
+            foreach (Node node in toExplore)
+            {
+                toExploreText += node.name + " ";
+            }
+            
+            Console.WriteLine(visitedText);
+            Console.WriteLine(toExploreText);
         }
         
         // Re-build path (but in reverse)
         Console.WriteLine("-----------------------------");
 
+        Console.WriteLine("Retrace chemin de parent en parent depuis le goalNode");
+        
         List<Node> path = new List<Node>();
         
         if (!childToParentDictionary.ContainsKey(goalNode))
@@ -206,17 +247,19 @@ public class PathDemo
         Node currentParent = goalNode;
         path.Add(goalNode);
         
-        Console.WriteLine(goalNode.name);
+        Console.WriteLine("Goal node : " + goalNode.name);
         
         while (currentParent != startNode)
         {
-            Console.WriteLine(childToParentDictionary[currentParent].name);
+            Console.WriteLine($"Parent of {currentParent.name} is : " + childToParentDictionary[currentParent].name);
             
             path.Add(childToParentDictionary[currentParent]);
             currentParent = childToParentDictionary[currentParent];
         }
 
         // Path need to be reversed to get start first
+        Console.WriteLine("-----------------------------");
+        Console.WriteLine("Reverse path");
         path.Reverse();
 
         Console.WriteLine("-----------------------------");
