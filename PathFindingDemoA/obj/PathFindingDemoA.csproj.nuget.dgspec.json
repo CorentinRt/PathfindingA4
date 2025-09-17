@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Corentin\\OneDrive\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj": {}
+    "C:\\Users\\coren\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Corentin\\OneDrive\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj": {
+    "C:\\Users\\coren\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Corentin\\OneDrive\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj",
+        "projectUniqueName": "C:\\Users\\coren\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj",
         "projectName": "PathFindingDemoA",
-        "projectPath": "C:\\Users\\Corentin\\OneDrive\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj",
-        "packagesPath": "C:\\Users\\Corentin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Corentin\\OneDrive\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\obj\\",
+        "projectPath": "C:\\Users\\coren\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\PathFindingDemoA.csproj",
+        "packagesPath": "C:\\Users\\coren\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\coren\\Documents\\IIM\\A4\\Pathfinding\\PathfindingA4\\PathFindingDemoA\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Corentin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\coren\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

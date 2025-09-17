@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PathFindingDemoA
-build_property.ProjectDir = C:\Users\Corentin\OneDrive\Documents\IIM\A4\Pathfinding\PathfindingA4\PathFindingDemoA\
+build_property.ProjectDir = C:\Users\coren\Documents\IIM\A4\Pathfinding\PathfindingA4\PathFindingDemoA\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

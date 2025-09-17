@@ -78,7 +78,8 @@ public class PathDemo
         Initialize();
 
         //List<Node> path = FindPathGlouton("A", "G");
-        List<Node> path = FindPathBreadthFirstSearch("A", "G");
+        //List<Node> path = FindPathBreadthFirstSearch("A", "G");
+        List<Node> path = FindPathDijkstra("A", "G");
 
         PrintPath(path);
     }
@@ -263,6 +264,100 @@ public class PathDemo
         path.Reverse();
 
         Console.WriteLine("-----------------------------");
+        
+        return path;
+    }
+
+    // ---------------------------------------
+    // Dijkstra pathfinding
+    public List<Node> FindPathDijkstra(string start, string goal)
+    {
+        List<Node> path = new List<Node>();
+
+        Node startNode = nodes[start];
+        Node goalNode = nodes[goal];
+        
+        List<Node> unExplored = new List<Node>();
+        Dictionary<Node, int> nodeDistance = new Dictionary<Node, int>();
+        Dictionary<Node, Node> nodeParent = new Dictionary<Node, Node>();
+
+        foreach (KeyValuePair<string, Node> pair in nodes)
+        {
+            unExplored.Add(pair.Value);
+            
+            if (pair.Value == startNode)
+            {
+                nodeDistance[pair.Value] = 0;
+                continue;
+            }
+            
+            nodeDistance[pair.Value] = int.MaxValue;
+        }
+
+
+        while (unExplored.Count > 0)
+        {
+            Console.WriteLine("-------------------------------");
+            Node currentNode = null;
+            int currentDistance = -1;
+            
+            foreach (Node node in unExplored)
+            {
+                if (currentDistance == -1 || currentDistance > nodeDistance[node])
+                {
+                    currentNode = node;
+                    currentDistance = nodeDistance[node];
+                }
+            }
+
+            if (currentNode == null)
+            {
+                Console.WriteLine($"No path possible to goal : {goalNode.name} from start : {startNode.name}");
+                return path;
+            }
+
+            Console.WriteLine($"Current node: {currentNode.name}");
+            
+            unExplored.Remove(currentNode);
+
+            if (currentNode == goalNode)
+            {
+                break;
+            }
+
+            foreach (KeyValuePair<Node, int> pair in currentNode.adjacents)
+            {
+                if (!unExplored.Contains(pair.Key))
+                    continue;
+                
+                Console.WriteLine($"Explore adjacent {pair.Key.name}");
+                int newDistance = nodeDistance[currentNode] + pair.Value;
+
+                if (nodeDistance[pair.Key] > newDistance)
+                {
+                    Console.WriteLine($"Add parent of {pair.Key.name} to {currentNode.name}");
+                    nodeDistance[pair.Key] = newDistance;
+                    nodeParent[pair.Key] =  currentNode;
+                }
+            }
+        }
+        
+        Console.WriteLine("-------------------------------");
+        
+        Node currentParent = goalNode;
+        path.Add(goalNode);
+        
+        Console.WriteLine("Goal node : " + goalNode.name);
+        
+        while (currentParent != startNode)
+        {
+            Console.WriteLine($"Parent of {currentParent.name} is : " + nodeParent[currentParent].name);
+            
+            path.Add(nodeParent[currentParent]);
+            currentParent = nodeParent[currentParent];
+        }
+        
+        path.Reverse();
         
         return path;
     }
