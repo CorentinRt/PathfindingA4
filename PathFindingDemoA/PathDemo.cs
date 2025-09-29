@@ -278,22 +278,12 @@ public class PathDemo
         Node goalNode = nodes[goal];
         
         List<Node> unExplored = new List<Node>();
+        HashSet<Node> visited = new HashSet<Node>();
         Dictionary<Node, int> nodeDistance = new Dictionary<Node, int>();
         Dictionary<Node, Node> nodeParent = new Dictionary<Node, Node>();
 
-        foreach (KeyValuePair<string, Node> pair in nodes)
-        {
-            unExplored.Add(pair.Value);
-            
-            if (pair.Value == startNode)
-            {
-                nodeDistance[pair.Value] = 0;
-                continue;
-            }
-            
-            nodeDistance[pair.Value] = int.MaxValue;
-        }
-
+        unExplored.Add(startNode);
+        nodeDistance[startNode] = 0;
 
         while (unExplored.Count > 0)
         {
@@ -327,19 +317,23 @@ public class PathDemo
 
             foreach (KeyValuePair<Node, int> pair in currentNode.adjacents)
             {
-                if (!unExplored.Contains(pair.Key))
+                if (visited.Contains(pair.Key))
                     continue;
                 
                 Console.WriteLine($"Explore adjacent {pair.Key.name}");
                 int newDistance = nodeDistance[currentNode] + pair.Value;
 
-                if (nodeDistance[pair.Key] > newDistance)
+                if (!nodeDistance.ContainsKey(pair.Key) || nodeDistance[pair.Key] > newDistance)
                 {
                     Console.WriteLine($"Add parent of {pair.Key.name} to {currentNode.name}");
                     nodeDistance[pair.Key] = newDistance;
                     nodeParent[pair.Key] =  currentNode;
                 }
+                
+                unExplored.Add(pair.Key);
             }
+            
+            visited.Add(currentNode);
         }
         
         Console.WriteLine("-------------------------------");
