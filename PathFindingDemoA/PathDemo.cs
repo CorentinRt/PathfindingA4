@@ -9,7 +9,16 @@ namespace PathfindingDemoA;
 public class Node
 {
     public string name = "";
+    public int x = 0;
+    public int y = 0;
     public Dictionary<Node, int> adjacents = new Dictionary<Node, int>();
+
+    public Node(string name, int x, int y)
+    {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+    }
 }
 public class NodeConfig
 {
@@ -28,21 +37,40 @@ public class NodeConfig
 public class PathDemo
 {
 
-    List<string> nodeNames = new List<string>() {"A", "B", "C", "D", "E", "F", "G"};
+    List<Node> baseNodes = new List<Node>()
+    {
+        new Node("11", 1, 2),
+        new Node("41", 2, 2),
+        new Node("61", 1, 4),
+        new Node("111", 5, 1),
+        new Node("121", 3, 3),
+        new Node("211", 6, 3),
+        new Node("221", 5, 2),
+        new Node("261", 4, 3),
+        new Node("691", 5, 5),
+        new Node("711", 3, 1),
+        new Node("731", 2, 5),
+    };
+
     List<NodeConfig> nodeConfigs = new List<NodeConfig>()
     {
-        new NodeConfig("A", "B", 1),
-        new NodeConfig("A", "C", 3),
-        new NodeConfig("A", "E", 2),
-        new NodeConfig("B", "C", 1),
-        new NodeConfig("B", "D", 4),
-        new NodeConfig("C", "D", 2),
-        new NodeConfig("C", "E", 1),
-        new NodeConfig("C", "G", 2),
-        new NodeConfig("D", "F", 1),
-        new NodeConfig("D", "G", 4),
-        new NodeConfig("F", "G", 1),
+        new NodeConfig("11", "41", 24),
+        new NodeConfig("41", "711", 17),
+        new NodeConfig("41", "121", 31),
+        new NodeConfig("111", "211", 30),
+        new NodeConfig("111", "221", 14),
+        new NodeConfig("111", "711", 28),
+        new NodeConfig("121", "691", 51),
+        new NodeConfig("121", "711", 8),
+        new NodeConfig("211", "221", 10),
+        new NodeConfig("211", "261", 4),
+        new NodeConfig("211", "691", 11),
+        new NodeConfig("221", "711", 12),
+        new NodeConfig("261", "691", 21),
+        new NodeConfig("261", "711", 17),
+        new NodeConfig("691", "731", 30),
     };
+
 
     Dictionary<string, Node> nodes = new Dictionary<string, Node> ();
 
@@ -53,11 +81,9 @@ public class PathDemo
     void Initialize()
     {
         nodes = new Dictionary<string, Node>();
-        foreach (string name in nodeNames)
+        foreach (Node node in baseNodes)
         {
-            Node node = new Node();
-            node.name = name;
-            nodes.Add(name, node);
+            nodes.Add(node.name, node);
         }
 
         foreach (NodeConfig nodeConfig in nodeConfigs)
@@ -77,9 +103,10 @@ public class PathDemo
     {
         Initialize();
 
-        //List<Node> path = FindPathGlouton("A", "G");
-        //List<Node> path = FindPathBreadthFirstSearch("A", "G");
-        List<Node> path = FindPathDijkstra("A", "G");
+        //List<Node> path = FindPathGlouton("11", "211");
+        //List<Node> path = FindPathBreadthFirstSearch("11", "211");
+        //List<Node> path = FindPathDijkstra("11", "211");
+        List<Node> path = FindPathASTAR("11", "211");
 
         PrintPath(path);
     }
@@ -354,5 +381,10 @@ public class PathDemo
         path.Reverse();
         
         return path;
+    }
+
+    public List<Node> FindPathASTAR(string start, string goal)
+    {
+        return null;
     }
 }
