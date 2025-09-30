@@ -425,7 +425,7 @@ public class PathDemo
             {
                 float estimation = nodeDistance[node] + MathF.Sqrt( MathF.Pow(goalNode.x - node.x, 2) + MathF.Pow(goalNode.y - node.y, 2));
                 
-                if (currentEstimationDistance == -1 || currentEstimationDistance > estimation)
+                if (currentEstimationDistance == -1f || currentEstimationDistance > estimation)
                 {
                     currentNode = node;
                     currentEstimationDistance = estimation;
