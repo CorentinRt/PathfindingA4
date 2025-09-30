@@ -198,6 +198,11 @@ public class PathDemo
     // BFS pathfinding
     public List<Node> FindPathBreadthFirstSearch(string start, string goal)
     {
+        if (!nodes.ContainsKey(start))
+            throw new Exception("Missing node");
+        if (!nodes.ContainsKey(goal))
+            throw new Exception("Missing node");
+        
         Queue<Node> toExplore = new Queue<Node>();
         
         HashSet<Node> visited = new HashSet<Node>();
